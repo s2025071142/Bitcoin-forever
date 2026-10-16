@@ -6,24 +6,22 @@ import (
 )
 
 // CalculateBlockSubsidy determines the miner reward for the current block height.
-// It mirrors Bitcoin's halving mechanics but enforces a strict Monero-style tail emission floor.
+// It decreases the reward gradually with every single block until hitting the tail floor.
 func CalculateBlockSubsidy(height int64) sdk.Coin {
-	initialSubsidy := float64(50 * 1000000)     // 50 coins starting block reward
-	halvingInterval := int64(210000)            // Reward halves every 210,000 blocks
-	tailEmissionFloor := float64(0.005 * 1000000) // 0.005 coins permanent block reward floor
+	initialSubsidy := float64(50 * 1000000)       // 50 coins starting block reward (in base units)
+	tailEmissionFloor := float64(0.005 * 1000000) // 0.005 coins permanent floor
 
-	halvings := height / halvingInterval
+	// This decay factor controls how fast the reward shrinks. 
+	// 0.000005 means the reward drops by a tiny fraction every single block.
+	decayFactor := 0.000005 
 
-	if halvings > 60 { 
-		return sdk.NewCoin("native", sdk.NewInt(int64(tailEmissionFloor)))
-	}
+	// Calculate the smooth gradual drop based on the current block height
+	currentSubsidy := initialSubsidy * math.Exp(-decayFactor * float64(height))
 
-	currentSubsidy := initialSubsidy / math.Pow(2, float64(halvings))
-
+	// If the smooth calculation drops below your floor, lock it at 0.005 forever!
 	if currentSubsidy < tailEmissionFloor {
 		currentSubsidy = tailEmissionFloor
 	}
 
 	return sdk.NewCoin("native", sdk.NewInt(int64(currentSubsidy)))
 }
-
