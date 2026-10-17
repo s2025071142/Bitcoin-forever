@@ -1,7 +1,8 @@
-package app
+package main
 
 import (
 	"time"
+
 	"://github.com"
 	"://github.com"
 	"://github.com"
