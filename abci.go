@@ -1,12 +1,12 @@
-package app
+package main
 
 import (
-	sdk "://github.com"
+	"://github.com"
 )
 
 // AdjustDynamicGasLimit calculates a moving target for the EVM execution engine.
 // It dynamically increases capacity during congestion and prevents network spam.
-func AdjustDynamicGasLimit(ctx sdk.Context, historicalAverageGas uint64) uint64 {
+func AdjustDynamicGasLimit(historicalAverageGas uint64) uint64 {
 	const TargetGasLimit uint64 = 30000000 
 	const MaxGrowthFactor float64 = 2.0 
 
