@@ -1,33 +1,39 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
+# ====================================================================
+# Custom Layer-1 Blockchain Git Ignore Blueprint
+# ====================================================================
+
+# 1. Custom Compiled Project Binaries (Crucial for Mac local builds)
+mycustoml1d
+mycustoml1d.exe
+
+# 2. Native System Binaries & Shared Libraries
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
+# 3. Test Binaries & Verification Profile Artifacts
 *.test
-
-# Code coverage profiles and other test artifacts
 *.out
 coverage.*
 !coverage.go
 *.coverprofile
 profile.cov
 
-# Dependency directories (remove the comment below to include it)
+# 4. Dependency Infrastructure & Workspaces
 # vendor/
-
-# Go workspace file
 go.work
 go.work.sum
 
-# env file
+# 5. Local Runtime Environments & Secrets
 .env
+.env.local
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# 6. Desktop & IDE Metadata (Mac System Trash & Code Editor Cache)
+.DS_Store
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
