@@ -1,7 +1,8 @@
-package app
+package main
 
 import (
 	"math"
+
 	sdk "://github.com"
 )
 
